@@ -28,84 +28,70 @@ Sample Output 1:
 0 1 3 2
 */
 
-#include <bits/stdc++.h>
-
+#include <iostream>
+#include<queue>
 using namespace std;
 
 
-void print(int** edges, int n, int* visited, int sv){
-	//cout << sv << '\n';
-	visited[sv] = 1;
-
-	queue<int> temp;
-	temp.push(sv);
-	while(!temp.empty()){
-		int top = temp.front();
-		temp.pop();
-		cout << top << " ";
-		//visited[temp] = 1;
-
-		for (int i = 0; i < n; ++i)
-		{
-			if (i==top)
-			{
-				continue;
-			}
-			if (edges[top][i] == 1 && visited[i] == 0)
-			{
-				temp.push(i);		
-				visited[i] = 1;
-			}
-		}
+void printbfs(int **arr,int n,int st,bool *visited){
+    visited[st]=true;
+    queue <int> q;
+    q.push(st);
+    while(!q.empty()){
+        int sv=q.front();
+        q.pop();
+        cout<<sv<<" ";
+    for(int i=0;i<n;i++){
+        if(i==sv)
+            continue;
+        if(arr[sv][i]==1 && visited[i]==false){
+             q.push(i);
+            visited[i]=true;
+        }
+    }
 	}
-
-	return;
 }
 
+int main() {
+    int V, E;
+    cin >> V >> E;
 
-int main( int argc , char ** argv )
-{
-	ios_base::sync_with_stdio(false) ; 
-	cin.tie(NULL) ; 
-	
-	int n, e;
-	cin>>n>>e;
+  /*
 
-	int** edges = new int*[n];
-	for (int i = 0; i < n; ++i)
-	{
-		edges[i] = new int[n];
-		for (int j = 0; j < n; ++j)
-		{
-			edges[i][j] = 0;
-		}
-	}
+  	   Write Your Code Here
+	   Complete the Rest of the Program
+	   You have to take input and print the output yourself
+	 
+  */
+    int** arr=new int*[V];
+    for(int i=0;i<V;i++){
+        arr[i]=new int[V];
+        for(int j=0;j<V;j++){
+            arr[i][j]=0;
+        }
+    }
+    //  int k,l;
+    //     cin>>k>>l;
+    //     arr[k][l]=1;
+    //     arr[l][k]=1;
+    // int a=k;
 
-	int* visited = new int[n];
-
-	for (int i = 0; i < n; ++i)
-	{
-		visited[i] = 0;
-	}
-
-	for (int i = 0; i < e; ++i)
-	{
-		int a, b;
-		cin>>a>>b;
-
-		edges[a][b] = 1;
-		edges[b][a] = 1;
-	}
-
-		
-
-	print(edges, n, visited, 0);
-
-
-
-
-	return 0 ; 
-
-
-
+    for(int i=0;i<E;i++){
+        int k,l;
+        cin>>k>>l;
+        arr[k][l]=1;
+        arr[l][k]=1;
+    }
+    bool* visited=new bool[V];
+    for(int i=0;i<V;i++){
+        visited[i]=false;
+    }
+    for(int i=0;i<V;i++){
+        if(!visited[i]){
+            printbfs(arr,V,i,visited);
+        }
+    }
+    // cout<<0<<endl;
+   
+  return 0;
 }
